@@ -154,9 +154,19 @@ export const login = async (req, res) => {
 };
 
 export const logout = async (req, res) => {
-  // clearing the cookie
-  res.clearCookie("token");
-  res.status(200).json({ sucess: true, message: "Logged out successfully" });
+  try {
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      path: "/",
+    });
+    return res
+      .status(200)
+      .json({ success: true, message: "Logged out successfully" });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Logout failed" });
+  }
 };
 
 export const forgotPassword = async (req, res) => {
