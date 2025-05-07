@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: "https://signup-auth-backend.vercel.app",
+    origin: "http://localhost:5173",
     credentials: true,
   })
 ); // to allow cross-origin requests
