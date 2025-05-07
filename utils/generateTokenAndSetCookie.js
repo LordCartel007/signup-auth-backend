@@ -8,7 +8,7 @@ export const generateTokenAndSetCookie = (res, userId) => {
   res.cookie("token", token, {
     httpOnly: true, // only accessible by the web server to prevent XSS attacks
     secure: true, // set to true if using HTTPS
-    sameSite: "strict", // helps prevent CSRF attacks
+    sameSite: "none", // helps prevent CSRF attacks
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
   });
   return token;
