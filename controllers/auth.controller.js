@@ -132,6 +132,17 @@ export const login = async (req, res) => {
         message: "Invalid credentials",
       });
     }
+
+    // ⛔️ If user exists but not verified
+    if (!user.isVerified) {
+      return res.status(403).json({
+        success: false,
+        message: "Email not verified",
+        redirectToVerify: true, // 👈 frontend can check this
+        userId: user._id, // optional: if you want to auto-send the email or prefill email
+      });
+    }
+
     generateTokenAndSetCookie(res, user._id);
     user.lastLogin = new Date();
     await user.save();
