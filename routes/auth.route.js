@@ -30,5 +30,6 @@ router.post("/forgot-password", forgotPassword);
 
 router.post("/reset-password/:token", resetPassword);
 
+router.post("/resend-verification", resendVerificationEmail);
 // exporting all the routers here
 export default router;

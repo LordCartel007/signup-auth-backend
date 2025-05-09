@@ -69,6 +69,35 @@ export const signup = async (req, res) => {
   }
 };
 
+// controllers/authController.js
+
+export const resendVerificationEmail = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
+    }
+
+    if (user.isVerified) {
+      return res.status(400).json({ message: "User already verified" });
+    }
+
+    const verificationToken = crypto.randomBytes(32).toString("hex");
+    user.verificationToken = verificationToken;
+    await user.save();
+
+    await sendVerificationEmail(user.email, verificationToken);
+
+    res.status(200).json({ message: "Verification email resent" });
+  } catch (error) {
+    console.error("Error resending verification:", error);
+    res.status(500).json({ message: "Failed to resend verification email" });
+  }
+};
+
 export const verifyEmail = async (req, res) => {
   // 1 2 3 4 5 6
   const { code } = req.body;
