@@ -70,31 +70,47 @@ export const signup = async (req, res) => {
 };
 
 // controllers/authController.js
-
 export const resendVerificationEmail = async (req, res) => {
   const { email } = req.body;
 
   try {
+    // Find existing user
     const user = await User.findOne({ email });
-
     if (!user) {
-      return res.status(400).json({ message: "User not found" });
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
     }
 
     if (user.isVerified) {
-      return res.status(400).json({ message: "User already verified" });
+      return res.status(400).json({
+        success: false,
+        message: "User is already verified",
+      });
     }
 
-    const verificationToken = crypto.randomBytes(32).toString("hex");
+    // Generate new 6-digit token
+    const verificationToken = Math.floor(
+      100000 + Math.random() * 900000
+    ).toString();
+
     user.verificationToken = verificationToken;
+    user.verificationTokenExpiresAt = Date.now() + 24 * 60 * 60 * 1000; // 24 hours
     await user.save();
 
+    // Send email
     await sendVerificationEmail(user.email, verificationToken);
 
-    res.status(200).json({ message: "Verification email resent" });
+    res.status(200).json({
+      success: true,
+      message: "Verification email resent successfully",
+    });
   } catch (error) {
-    console.error("Error resending verification:", error);
-    res.status(500).json({ message: "Failed to resend verification email" });
+    res.status(500).json({
+      success: false,
+      message: "Failed to resend verification email",
+    });
   }
 };
 
