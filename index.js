@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: "https://signup-frontend-zeta.vercel.app/homepage",
+    origin: "https://signup-frontend-zeta.vercel.app",
     credentials: true,
   })
 ); // to allow cross-origin requests
