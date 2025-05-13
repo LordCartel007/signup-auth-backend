@@ -246,7 +246,7 @@ export const forgotPassword = async (req, res) => {
 
     await user.save();
 
-    //send email
+    //send email for password reset
     // reset url using the token
     await sendPasswordResetEmail(
       user.email,
