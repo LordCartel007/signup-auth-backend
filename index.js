@@ -74,4 +74,6 @@ app.use("/api/auth", authRoutes);
 //   connectDB();
 //   console.log("Server is running on port:", PORT);
 // });
+
+//app needs to be exported for vercel to work
 export default app;
