@@ -303,6 +303,7 @@ export const resetPassword = async (req, res) => {
   }
 };
 
+//checking if user is authenticated
 export const checkAuth = async (req, res) => {
   try {
     // removing password from the user object by using select -password
