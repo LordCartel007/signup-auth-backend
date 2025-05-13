@@ -225,7 +225,6 @@ export const logout = async (req, res) => {
   }
 };
 
-const resetURL = `${process.env.CLIENT_URL}/reset-password/${token}`;
 export const forgotPassword = async (req, res) => {
   const { email } = req.body;
   try {
