@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: "https://ai.autocartel.shop/",
+    origin: "https://ai.autocartel.shop",
     credentials: true,
   })
 ); // to allow cross-origin requests
